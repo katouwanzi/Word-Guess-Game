@@ -7,7 +7,7 @@ var animals = ["alpaca", "buffalo", "camel", "cat", "snake",
 //var collection:
 var wins = 0;
 var losses = 0;
-var guessLeft = 15;
+var guessLeft = 8;
 var guessSoFar = [];
 
 var computerPick = "";
@@ -35,7 +35,7 @@ function updateDisplayValue(){
 
 //reset all the display:
 function reset(){
-    guessLeft = 15;
+    guessLeft = 8;
     guessSoFar = [];
     computerPick = pickWord();
     answerArray = [];
@@ -50,18 +50,22 @@ reset();
 //user press key:
 document.onkeyup = function(event){
     var userGuess = event.key.toLowerCase();
+    if(guessSoFar.indexOf(userGuess) === -1){
     if(computerPick.indexOf(userGuess)!=-1){
-        for (var j = 0; j < computerPick.length; j++){
-            if(computerPick[j] === userGuess){
-                answerArray[j] = userGuess;
-                remainingLetters--;
+            for (var j = 0; j < computerPick.length; j++){
+                if(computerPick[j] === userGuess){
+                    answerArray[j] = userGuess;
+                    
+                }
             }
         }
+    else{
+        guessLeft--;
+        guessSoFar += " " + userGuess;
     }
-    guessSoFar += " " + userGuess;
-    guessLeft--;
+    
     //win
-    if(remainingLetters === 0){
+    if(answerArray.join("") === computerPick){
         wins++;
         reset();
     }
@@ -71,4 +75,5 @@ document.onkeyup = function(event){
         reset();
     }
     updateDisplayValue();
+  }
 }
